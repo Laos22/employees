@@ -5,13 +5,15 @@ import './employees-list.css';
 const EmployeesList = ({data}) => {
     console.dir(data);
 
-    
+    const elements = data.map(item => {
+        return (
+            <EmployeesListItem {...item}/>
+        )
+    })
 
     return (
         <ul className="app-list list-group">
-            <EmployeesListItem name={data[0].name} salary={1000}/>
-            <EmployeesListItem name="Fylhtq" salary={5000}/>
-            <EmployeesListItem name="JON" salary={5000}/>
+            {elements}
 
         </ul>
     )
