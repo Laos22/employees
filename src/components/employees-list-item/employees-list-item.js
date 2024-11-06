@@ -9,7 +9,8 @@ class EmployeesListItem extends Component{
         super(props);
         this.state = {
             increase: false,
-            like: false
+            like: false,
+            
         }
     }
 
@@ -25,8 +26,12 @@ class EmployeesListItem extends Component{
         }))
     }
 
+    // onDeleteItem = () => {
+    //     console.log("deleted")
+    // }
+
     render () {
-        const {name, salary} = this.props;
+        const {name, salary, onDeleteItem} = this.props;
         const {increase, like} = this.state;
 
         let clasnameIncrease = "list-group-item d-flex justify-content-between";
@@ -48,6 +53,7 @@ class EmployeesListItem extends Component{
                     </button>
 
                     <button type="button"
+                            onClick={onDeleteItem}
                             className="btn-trash btn-sm">
                         <i className="fas fa-trash"></i>
                     </button>
