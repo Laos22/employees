@@ -14,11 +14,11 @@ class App extends Component {
     super(props);
     this.state = {
       data: [
-        {name: 'Alex', salary: 1000, increase: true, id: 1},
-        {name: 'Ivan', salary: 2000, increase: false, id: 2},
-        {name: 'Irina', salary: 5000, increase: true, id: 3},
-        {name: 'Olga', salary: 6000, increase: false, id: 4},
-        {name: 'Oleg', salary: 4000, increase: true, id: 5},
+        {name: 'Alex', salary: 1000, increase: true, rise: false, id: 1},
+        {name: 'Ivan', salary: 2000, increase: false, rise: true, id: 2},
+        {name: 'Irina', salary: 5000, increase: true, rise: false, id: 3},
+        {name: 'Olga', salary: 6000, increase: false, rise: false, id: 4},
+        {name: 'Oleg', salary: 4000, increase: true, rise: false, id: 5},
       ]
     }
 
@@ -26,10 +26,22 @@ class App extends Component {
 
   }
 
+  onToogleProp = (id, prop) => {
+    this.setState(({data}) => {
+      return {
+        data: data.map(item => {
+          if (item.id === id) {
+            return {...item, [prop]: !item[prop]}
+          }
+          return item;
+        })
+      }
+    })
+  }
+
 
   onDeleteItem = (id) => {
     this.setState(({data}) => {
-
       return {
         data: data.filter(item => item.id !== id)
       }
@@ -40,7 +52,8 @@ class App extends Component {
     const newItem = {
       name: name, 
       salary: salary, 
-      increase: true, 
+      increase: false,
+      rise: false, 
       id: this.idCount++
     }
     this.setState((state) => ({
@@ -63,7 +76,7 @@ class App extends Component {
               <AppFilter/>
           </div>
           
-          <EmployeesList data={data} onDeleteItem={this.onDeleteItem} />
+          <EmployeesList data={data} onDeleteItem={this.onDeleteItem} onToogleProp={this.onToogleProp}/>
           <EmployeesAddForm addItem={this.addItem}/>
       </div>
     )
