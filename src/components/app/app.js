@@ -19,10 +19,18 @@ class App extends Component {
         {name: 'Irina', salary: 5000, increase: true, rise: false, id: 3},
         {name: 'Olga', salary: 6000, increase: false, rise: false, id: 4},
         {name: 'Oleg', salary: 4000, increase: true, rise: false, id: 5},
-      ]
+      ],
+      term: ''
     }
-
     this.idCount = 6;
+  }
+
+  onTerm = (term) => {
+      this.setState({
+        term: term
+      })
+
+    // console.log(this.state.trerm)
 
   }
 
@@ -38,7 +46,6 @@ class App extends Component {
       }
     })
   }
-
 
   onDeleteItem = (id) => {
     this.setState(({data}) => {
@@ -59,24 +66,23 @@ class App extends Component {
     this.setState((state) => ({
       data: [...state.data, newItem]
     }))
+
   }
 
   render() {
-    const {data} = this.state;
-
-    const allEmployees = data.length;
-    const increaseEmployees = data.filter(item => item.increase).length;
+    const {data, term} = this.state;
+    const visibleData = data.filter(item => item.name.indexOf(term) > -1)
+    const allEmployees = visibleData.length;
+    const increaseEmployees = visibleData.filter(item => item.increase).length;
 
     return (
       <div className="app">
           <AppInfo allEmployees={allEmployees} increaseEmployees={increaseEmployees}/>
-  
           <div className="search-panel">
-              <SearchPanel/>
+              <SearchPanel onTerm={this.onTerm} term={term}/>
               <AppFilter/>
           </div>
-          
-          <EmployeesList data={data} onDeleteItem={this.onDeleteItem} onToogleProp={this.onToogleProp}/>
+          <EmployeesList data={visibleData} onDeleteItem={this.onDeleteItem} onToogleProp={this.onToogleProp}/>
           <EmployeesAddForm addItem={this.addItem}/>
       </div>
     )
