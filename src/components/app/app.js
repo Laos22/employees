@@ -20,7 +20,8 @@ class App extends Component {
         {name: 'Olga', salary: 6000, increase: false, rise: false, id: 4},
         {name: 'Oleg', salary: 4000, increase: true, rise: false, id: 5},
       ],
-      term: ''
+      term: '',
+      filter: 'allEmployees'
     }
     this.idCount = 6;
   }
@@ -69,9 +70,30 @@ class App extends Component {
 
   }
 
+  onfilter = (filter) => {
+      this.setState({filter})
+  }
+
+  filterdata = (item, filter) => {
+
+    switch (filter) {
+      case "onIncrease": 
+        return item.filter(item => item.increase);
+      case "salaryMore1000": 
+        return item.filter(item => item.salary > 100);
+      default: 
+        return item
+    }
+    
+  }
+  
   render() {
-    const {data, term} = this.state;
-    const visibleData = data.filter(item => item.name.indexOf(term) > -1)
+    // console.log(this.filter)
+    
+    const {data, term, filter} = this.state;
+
+
+    const visibleData = this.filterdata(data.filter(item => item.name.indexOf(term) > -1), filter)
     const allEmployees = visibleData.length;
     const increaseEmployees = visibleData.filter(item => item.increase).length;
 
@@ -80,7 +102,7 @@ class App extends Component {
           <AppInfo allEmployees={allEmployees} increaseEmployees={increaseEmployees}/>
           <div className="search-panel">
               <SearchPanel onTerm={this.onTerm} term={term}/>
-              <AppFilter/>
+              <AppFilter onfilter={this.onfilter} filter={filter}/>
           </div>
           <EmployeesList data={visibleData} onDeleteItem={this.onDeleteItem} onToogleProp={this.onToogleProp}/>
           <EmployeesAddForm addItem={this.addItem}/>

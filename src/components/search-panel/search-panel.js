@@ -14,4 +14,5 @@ const SearchPanel = (props) => {
     
 }
 
+
 export default SearchPanel;
