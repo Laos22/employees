@@ -51,16 +51,19 @@ class App extends Component {
   render() {
     const {data} = this.state;
 
+    const allEmployees = data.length;
+    const increaseEmployees = data.filter(item => item.increase).length;
+
     return (
       <div className="app">
-          <AppInfo />
+          <AppInfo allEmployees={allEmployees} increaseEmployees={increaseEmployees}/>
   
           <div className="search-panel">
               <SearchPanel/>
               <AppFilter/>
           </div>
           
-          <EmployeesList data={data} onDeleteItem={this.onDeleteItem}/>
+          <EmployeesList data={data} onDeleteItem={this.onDeleteItem} />
           <EmployeesAddForm addItem={this.addItem}/>
       </div>
     )
