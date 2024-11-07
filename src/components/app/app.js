@@ -30,9 +30,6 @@ class App extends Component {
       this.setState({
         term: term
       })
-
-    // console.log(this.state.trerm)
-
   }
 
   onToogleProp = (id, prop) => {
@@ -75,7 +72,6 @@ class App extends Component {
   }
 
   filterdata = (item, filter) => {
-
     switch (filter) {
       case "onIncrease": 
         return item.filter(item => item.increase);
@@ -84,15 +80,10 @@ class App extends Component {
       default: 
         return item
     }
-    
   }
   
   render() {
-    // console.log(this.filter)
-    
     const {data, term, filter} = this.state;
-
-
     const visibleData = this.filterdata(data.filter(item => item.name.indexOf(term) > -1), filter)
     const allEmployees = visibleData.length;
     const increaseEmployees = visibleData.filter(item => item.increase).length;
